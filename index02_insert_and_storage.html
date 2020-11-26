@@ -92,23 +92,6 @@
                 <table class="order_table">
                     <tr>
                         <td>
-                            熱狗堡:
-                        </td>
-                        <td>
-                            <input type="radio" id='first_hot_dog_fort' name="hot_dog_fort" value="0" checked>0
-                            <input type="radio" name="hot_dog_fort" value="1">1
-                            <input type="radio" name="hot_dog_fort" value="2">2
-                            <input type="radio" name="hot_dog_fort" value="3">3
-                            <input type="radio" name="hot_dog_fort" value="4">4
-                            <input type="radio" name="hot_dog_fort" value="5">5
-                            <input type="radio" name="hot_dog_fort" value="6">6
-                            <input type="radio" name="hot_dog_fort" value="7">7
-                            <input type="radio" name="hot_dog_fort" value="8">8
-                            <input type="radio" name="hot_dog_fort" value="9">9
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
                             裹粉熱狗:
                         </td>
                         <td>
@@ -123,6 +106,23 @@
                             <input type="radio" name="normal_hot_dog" value="8">8
                             <input type="radio" name="normal_hot_dog" value="9">9
                             </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            熱狗堡:
+                        </td>
+                        <td>
+                            <input type="radio" id='first_hot_dog_fort' name="hot_dog_fort" value="0" checked>0
+                            <input type="radio" name="hot_dog_fort" value="1">1
+                            <input type="radio" name="hot_dog_fort" value="2">2
+                            <input type="radio" name="hot_dog_fort" value="3">3
+                            <input type="radio" name="hot_dog_fort" value="4">4
+                            <input type="radio" name="hot_dog_fort" value="5">5
+                            <input type="radio" name="hot_dog_fort" value="6">6
+                            <input type="radio" name="hot_dog_fort" value="7">7
+                            <input type="radio" name="hot_dog_fort" value="8">8
+                            <input type="radio" name="hot_dog_fort" value="9">9
                         </td>
                     </tr>
                     <tr>
@@ -156,13 +156,13 @@
                         <td>單號: 00</td>
                     </tr>
                     <tr>
-                        <td>熱狗堡:</td>
+                        <td>果粉熱狗:</td>
                         <td>番茄:0</td>
                         <td>芥末:0</td>
                         <td>海苔:0</td>
                     </tr>
                     <tr>
-                        <td>果粉熱狗:</td>
+                        <td>熱狗堡:</td>
                         <td>番茄:0</td>
                         <td>芥末:0</td>
                         <td>海苔:0</td>
@@ -199,6 +199,7 @@
 
 </body>
 <script>
+    var storage = sessionStorage;
     var sheet_number = 1
     var total_price = 0
     var hot_dog_fort_number
@@ -261,13 +262,13 @@
                         <td>單號:${show_order_sheet}</td>
                     </tr>
                     <tr>
-                        <td>熱狗堡:</td>
+                        <td>果粉熱狗:</td>
                         <td>番茄:0</td>
                         <td>芥末:0</td>
                         <td>海苔:0</td>
                     </tr>
                     <tr>
-                        <td>果粉熱狗:</td>
+                        <td>熱狗堡:</td>
                         <td>番茄:0</td>
                         <td>芥末:0</td>
                         <td>海苔:0</td>
@@ -291,15 +292,32 @@
         $("#first_normal_hot_dog").prop("checked", true);
         $("#first_french_fries_dog").prop("checked", true);
         $("#price_show").text(0);
+        total_price = 0;
     }
 
     function mount_ajaxForm() {
         $('#order_form').ajaxForm(function () {
             add_check_table()
+            set_sheet_storage()
             update_serial_number()
             reset_form()
         });
     }
+    function set_sheet_storage() {
+        var purchase_items = $(':checked')
+        var data = {
+            sheet_number,
+            total_price
+        }
+        for (var item of purchase_items) {
+            data[item.name] = item.value
+        }
+        storage['sheet' + sheet_number] = JSON.stringify(data)
+        console.log(storage['sheet' + sheet_number])
+
+    }
+
+
     $(function () {
         $('#check_area_container').css('height', window.innerHeight * 0.9)
         $('table input').on('click', get_total_price)
