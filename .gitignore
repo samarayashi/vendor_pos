@@ -1,3 +1,6 @@
 # 忽略nodejs的模組管控
 node_modules/
 package-lock.json
+
+# 忽略資料庫檔案
+*.db

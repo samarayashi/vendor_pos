@@ -70,10 +70,6 @@
             padding: 5px;
         }
 
-        .check_table:hover {
-            color: #fc3ac2;
-        }
-
         .check_table tr {
             border: 1px dashed black;
         }
@@ -90,7 +86,8 @@
             <div>當前時間</div>
             <div id="datebox"></div>
             <div id="timebox"></div><br>
-            <form id="order_form" action="send_order" method="POST">
+            <!-- <form id="order_form" action="send_order" method="POST"> -->
+            <form id="order_form" action="" method="GET">
                 <label>單號: <input id="sheet_number" name='sheet_number' type="text" value="1" readonly></label>
                 <table class="order_table">
                     <tr>
@@ -153,8 +150,8 @@
         </div>
         <div id="detail_area_container">
             <div>訂單詳細內容</div><br>
-            <div>
-                <table class="detail_table">
+            <div id="detail_table_area">
+                <table class="detail_table" id="sheet_00">
                     <tr>
                         <td>單號: 00</td>
                     </tr>
@@ -175,6 +172,9 @@
                         <td>番茄:0</td>
                         <td>芥末:0</td>
                         <td>海苔:0</td>
+                    </tr>
+                    <tr>
+                        <td>金額:00</td>
                     </tr>
                 </table>
             </div>
@@ -204,6 +204,8 @@
     var hot_dog_fort_number
     var normal_hot_dog_number
     var french_fries_dog_number
+    var show_order_sheet
+    var show_order_price
 
     function ShowTime() {
         var NowDate = new Date();
@@ -239,7 +241,7 @@
     }
 
     function add_check_table() {
-        let template = `<table class="check_table">
+        let template = `<table id="sheet_${sheet_number}" class="check_table">
                 <tr>
                     <td>單號</td>
                     <td>${sheet_number}</td>
@@ -254,8 +256,9 @@
     }
 
     function show_order_detail() {
-        let template = ` <tr>
-                        <td>單號:${sheet_number}</td>
+        let template = `<table id="sheet_${sheet_number}" class="detail_table">
+                    <tr>
+                        <td>單號:${show_order_sheet}</td>
                     </tr>
                     <tr>
                         <td>熱狗堡:</td>
@@ -274,8 +277,12 @@
                         <td>番茄:0</td>
                         <td>芥末:0</td>
                         <td>海苔:0</td>
-                    </tr>`
-        $('.detail_table').empty()
+                    </tr>
+                    <tr>
+                        <td>金額:${show_order_price}</td>
+                    </tr>
+                </table>`
+        $('#detail_table_area').empty()
             .prepend(template);
     }
 
@@ -296,11 +303,19 @@
     $(function () {
         $('#check_area_container').css('height', window.innerHeight * 0.9)
         $('table input').on('click', get_total_price)
-        $('#check_area_container').on('click', '.check_table', function () { $(this).toggleClass('checked_table') })
-        $('#check_area_container').on('click', '.check_table', show_order_detail)
+        $('#check_area_container').on('click', '.check_table', function () {
+            $(this).addClass('checked_table');
+            $(this).siblings('.check_table').removeClass('checked_table')
+        })
+        $('#check_area_container').on('click', '.check_table', function () {
+            var show = $(this).find('td:odd');
+            show_order_sheet = show[0].innerHTML;
+            show_order_price = show[1].innerHTML;
+            show_order_detail();
+        })
+
         ShowTime()
         mount_ajaxForm()
-        show_order_detail()
     })
 </script>
 
