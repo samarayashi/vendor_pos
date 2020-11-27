@@ -77,6 +77,20 @@
         .checked_table {
             background-color: gray;
         }
+
+        .check_button {
+            border: none;
+            color: black;
+            background-color: white;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            border: 2px solid black;
+
+        }
     </style>
 </head>
 
@@ -86,8 +100,8 @@
             <div>當前時間</div>
             <div id="datebox"></div>
             <div id="timebox"></div><br>
-            <!-- <form id="order_form" action="send_order" method="POST"> -->
-            <form id="order_form" action="" method="GET">
+            <form id="order_form" action="send_order" method="POST">
+                <!-- <form id="order_form" action="" method="GET"> -->
                 <label>單號: <input id="sheet_number" name='sheet_number' type="text" value="1" readonly></label>
                 <table class="order_table">
                     <tr>
@@ -177,6 +191,7 @@
                         <td>金額:00</td>
                     </tr>
                 </table>
+                <button class="check_button">確認結帳</button>
             </div>
 
         </div>
@@ -202,9 +217,6 @@
     var storage = sessionStorage;
     var sheet_number = 1
     var total_price = 0
-    var hot_dog_fort_number
-    var normal_hot_dog_number
-    var french_fries_dog_number
     var show_order_sheet
     var show_order_price
 
@@ -256,25 +268,32 @@
 
     }
 
+    function get_order_detail() {
+        var show = $(this).find('td:odd');
+        show_order_sheet = show[0].innerHTML;
+        show_order_price = show[1].innerHTML;
+    }
+
     function show_order_detail() {
-        let template = `<table id="sheet_${sheet_number}" class="detail_table">
+        var order_detail = JSON.parse(storage['sheet' + show_order_sheet]);
+        let template = `<table id="show_${show_order_sheet}" class="detail_table">
                     <tr>
                         <td>單號:${show_order_sheet}</td>
                     </tr>
                     <tr>
-                        <td>果粉熱狗:</td>
+                        <td>果粉熱狗:${order_detail.normal_hot_dog}</td>
                         <td>番茄:0</td>
                         <td>芥末:0</td>
                         <td>海苔:0</td>
                     </tr>
                     <tr>
-                        <td>熱狗堡:</td>
+                        <td>熱狗堡:${order_detail.hot_dog_fort}</td>
                         <td>番茄:0</td>
                         <td>芥末:0</td>
                         <td>海苔:0</td>
                     </tr>
                     <tr>
-                        <td>薯條熱狗:</td>
+                        <td>薯條熱狗:${order_detail.french_fries_dog}</td>
                         <td>番茄:0</td>
                         <td>芥末:0</td>
                         <td>海苔:0</td>
@@ -282,7 +301,8 @@
                     <tr>
                         <td>金額:${show_order_price}</td>
                     </tr>
-                </table>`
+                </table>
+                <button class="check_button">確認結帳</button>`
         $('#detail_table_area').empty()
             .prepend(template);
     }
@@ -295,14 +315,6 @@
         total_price = 0;
     }
 
-    function mount_ajaxForm() {
-        $('#order_form').ajaxForm(function () {
-            add_check_table()
-            set_sheet_storage()
-            update_serial_number()
-            reset_form()
-        });
-    }
     function set_sheet_storage() {
         var purchase_items = $(':checked')
         var data = {
@@ -317,6 +329,23 @@
 
     }
 
+    function finish_payment() {
+        $('#detail_area_container').on('click', '.check_button', function () {
+            $('#detail_table_area').empty();
+            $('#sheet_' + show_order_sheet).remove();
+            delete storage['sheet' + show_order_sheet];
+            // document.location.href = "localhost:5438/payment?sheet_number=1"
+        })
+    }
+
+    function mount_ajaxForm() {
+        $('#order_form').ajaxForm(function () {
+            add_check_table()
+            set_sheet_storage()
+            update_serial_number()
+            reset_form()
+        });
+    }
 
     $(function () {
         $('#check_area_container').css('height', window.innerHeight * 0.9)
@@ -325,15 +354,15 @@
             $(this).addClass('checked_table');
             $(this).siblings('.check_table').removeClass('checked_table')
         })
+        // 讓detail_area帶有check_area的狀態
         $('#check_area_container').on('click', '.check_table', function () {
-            var show = $(this).find('td:odd');
-            show_order_sheet = show[0].innerHTML;
-            show_order_price = show[1].innerHTML;
+            get_order_detail.call(this);
             show_order_detail();
         })
 
         ShowTime()
         mount_ajaxForm()
+        finish_payment()
     })
 </script>
 

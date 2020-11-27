@@ -6,7 +6,7 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index_connect_backend.html')
+    res.sendFile(__dirname + '/index02_insert_and_storage.html')
 });
 
 
@@ -23,9 +23,20 @@ app.post('/send_order', function (req, res) {
     }
     sql.insert_order(data);
 
-    // 是否只要註解掉這行就可以不轉跳，但是向後端傳值
-    res.sendFile(__dirname + '/index_connect_backend.html');
+    // 希望傳值處理完後仍保持原本頁面
+    res.sendFile(__dirname + '/index02_insert_and_storage.html');
 });
+
+/* 之後再實驗如何對後端傳值
+app.get('/payment', function (req, res) {
+    var sheet_number = req.query.sheet_number;
+    var data = {
+        $sheet: sheet_number,
+        $status: 1
+    }
+    // sql.comfirm_order(data);
+})
+*/
 
 app.get('*', function (req, res) {
     res.status(404);
