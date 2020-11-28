@@ -66,21 +66,12 @@ function show_order_detail() {
                 </tr>
                 <tr>
                     <td>果粉熱狗:${order_detail.normal_hot_dog}</td>
-                    <td>番茄:0</td>
-                    <td>芥末:0</td>
-                    <td>海苔:0</td>
                 </tr>
                 <tr>
                     <td>熱狗堡:${order_detail.hot_dog_fort}</td>
-                    <td>番茄:0</td>
-                    <td>芥末:0</td>
-                    <td>海苔:0</td>
                 </tr>
                 <tr>
                     <td>薯條熱狗:${order_detail.french_fries_dog}</td>
-                    <td>番茄:0</td>
-                    <td>芥末:0</td>
-                    <td>海苔:0</td>
                 </tr>
                 <tr>
                     <td>金額:${show_order_price}</td>
@@ -123,13 +114,16 @@ function finish_payment() {
 
 function restore_unfinish_order() {
     $('#check_area_container>table').remove();
+    var sorted_keys = Object.keys(storage).sort(function (a, b) {
+        return a.localeCompare(b, undefined, { numeric: true });
+    })
     var max_sheet_number = 0
-    for (var i = 0; i < storage.length; i++) {
-        var k = storage.key(i);
-        if (!(k.startsWith('sheet'))) { continue; }
-        var v = JSON.parse(storage[k]);
-        let restore_sheet_number = v.sheet_number;
-        var restore_total_price = v.total_price;
+    for (var i = 0; i < sorted_keys.length; i++) {
+        var key = sorted_keys[i]
+        if (!(key.startsWith('sheet'))) { continue; }
+        var value = JSON.parse(storage[key]);
+        let restore_sheet_number = value.sheet_number;
+        var restore_total_price = value.total_price;
         if (restore_sheet_number > max_sheet_number) max_sheet_number = restore_sheet_number;
         var template = `<table id="sheet_${restore_sheet_number}" class="check_table">
             <tr>
