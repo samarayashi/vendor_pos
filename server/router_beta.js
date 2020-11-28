@@ -1,14 +1,15 @@
 var express = require("express");
+var path = require('path');
 var bodyParser = require("body-parser");
-var sql = require('./sqlite_test03_module.js')
-var app = express();
+var sql = require('./sqlite_module.js')
 
+var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, '../public')))
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index02_insert_and_storage.html')
+    res.sendFile(path.join(__dirname, '../public/index_beta.html'))
 });
-
 
 app.post('/send_order', function (req, res) {
     var sheet_number = req.body.sheet_number;
@@ -24,7 +25,7 @@ app.post('/send_order', function (req, res) {
     sql.insert_order(data);
 
     // 希望傳值處理完後仍保持原本頁面
-    res.sendFile(__dirname + '/index02_insert_and_storage.html');
+    res.sendFile(path.join(__dirname, '../public/index_beta.html'));
 });
 
 /* 之後再實驗如何對後端傳值

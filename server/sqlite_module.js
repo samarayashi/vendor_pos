@@ -5,14 +5,9 @@ function insert_order(data) {
     });
 
     db.serialize(function () {
-
-        var stmt = db.prepare('INSERT INTO test_passing (sheet_num, normal_count, fort_count, french_count) VALUES ($sheet, $normal, $fort, $french)');
+        var stmt = db.prepare("INSERT INTO simple_transaction (transaction_date, sheet_num, normal_count, fort_count, french_count) VALUES (DateTime('now'), $sheet, $normal, $fort, $french)");
         stmt.run(data);
         stmt.finalize();
-
-        db.each('SELECT rowid AS id, sheet_num FROM test_passing', function (err, row) {
-            console.log(row.id + ': ' + row.sheet_num);
-        });
     });
 
     db.close();
