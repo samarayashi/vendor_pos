@@ -28,16 +28,14 @@ app.post('/send_order', function (req, res) {
     res.sendFile(path.join(__dirname, '../public/index_beta.html'));
 });
 
-/* 之後再實驗如何對後端傳值
-app.get('/payment', function (req, res) {
-    var sheet_number = req.query.sheet_number;
+
+app.post('/payment', function (req, res) {
+    var checked_sheet_number = req.body.checked_sheet_number;
     var data = {
-        $sheet: sheet_number,
-        $status: 1
-    }
-    // sql.comfirm_order(data);
+        $checked_sheet_num: checked_sheet_number
+    };
+    sql.confirm_order(data);
 })
-*/
 
 app.get('*', function (req, res) {
     res.status(404);

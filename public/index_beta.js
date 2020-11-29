@@ -77,7 +77,7 @@ function show_order_detail() {
                     <td>金額:${show_order_price}</td>
                 </tr>
             </table>
-            <button class="button">確認結帳</button>
+            <button id="confirm_button" class="button">確認結帳</button>
             <button class="button">取消訂單</button>`
     $('#detail_table_area').empty()
         .prepend(template);
@@ -104,11 +104,20 @@ function set_sheet_storage() {
 }
 
 function finish_payment() {
+    $('#detail_area_container').on('click', '#confirm_button', function () {
+        $.ajax({
+            url: '/payment',                        // url位置
+            type: 'post',                   // post/get
+            data: { checked_sheet_number: show_order_sheet }      // 輸入的資料
+        });
+    })
+}
+
+function clean_order() {
     $('#detail_area_container').on('click', '.button', function () {
         $('#detail_table_area').empty();
         $('#sheet_' + show_order_sheet).remove();
         delete storage['sheet' + show_order_sheet];
-        // document.location.href = "localhost:5438/payment?sheet_number=1"
     })
 }
 
@@ -179,4 +188,5 @@ $(function () {
     ShowTime()
     mount_ajaxForm()
     finish_payment()
+    clean_order()
 })
