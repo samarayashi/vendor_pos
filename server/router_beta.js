@@ -1,9 +1,11 @@
 var express = require("express");
 var path = require('path');
 var bodyParser = require("body-parser");
-var sql = require('./sqlite_module.js')
-
+var sqilte_module = require('./sqlite_module.js');
+var sql = new sqilte_module.sql('hot_dog.db');
 var app = express();
+
+sql.init_db()
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '../public')))
 
