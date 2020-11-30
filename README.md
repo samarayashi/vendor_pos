@@ -17,8 +17,8 @@
 3. 做成restful，利用ejs產生網頁
 
 關聯式資料庫雛形
-table：orders、products、orders_products
-order：order_ID(pk), order_datetime, total_price, payment_status
-product: product_ID(pk), prdocut_name, produc_price
-orders: order_id(pf), product_id(pf), quantity, tomato_sauce, mustard_sauce, both_sauce
+- table：orders、products、orders_products
+1. order：order_ID(pk), order_datetime, total_price, payment_status
+2. product: product_ID(pk), prdocut_name, produc_price
+3. orders: order_id(pf), product_id(pf), quantity, tomato_sauce, mustard_sauce, both_sauce
 
