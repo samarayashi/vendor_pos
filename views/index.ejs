@@ -9,8 +9,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"
         integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn"
         crossorigin="anonymous"></script>
-    <script src="./index_beta.js"></script>
-    <link rel="stylesheet" href="./index_beta.css">
+    <script src="./index.js"></script>
+    <link rel="stylesheet" href="./index.css">
 </head>
 
 <body>
@@ -25,20 +25,14 @@
                 <table class="order_table">
                     <tr>
                         <td>
-                            裹粉熱狗:
+                            <%= product1.html_name%>:
                         </td>
                         <td>
-                            <input type="radio" id='first_normal_hot_dog' name="normal_hot_dog" value="0" checked>0
-                            <input type="radio" name="normal_hot_dog" value="1">1
-                            <input type="radio" name="normal_hot_dog" value="2">2
-                            <input type="radio" name="normal_hot_dog" value="3">3
-                            <input type="radio" name="normal_hot_dog" value="4">4
-                            <input type="radio" name="normal_hot_dog" value="5">5
-                            <input type="radio" name="normal_hot_dog" value="6">6
-                            <input type="radio" name="normal_hot_dog" value="7">7
-                            <input type="radio" name="normal_hot_dog" value="8">8
-                            <input type="radio" name="normal_hot_dog" value="9">9
-                            </p>
+                            <input type="radio" id='first_<%= product1.input_name%>' name=<%= product1.input_name%>
+                                value="0" checked>0
+                            <% for( var i=1; i<10 ; i++){ %>
+                            <input type="radio" name=<%= product1.input_name%> value="<%= i %>"><%= i%>
+                            <% } %>
                         </td>
                     </tr>
                     <tr>
@@ -46,16 +40,11 @@
                             熱狗堡:
                         </td>
                         <td>
-                            <input type="radio" id='first_hot_dog_fort' name="hot_dog_fort" value="0" checked>0
-                            <input type="radio" name="hot_dog_fort" value="1">1
-                            <input type="radio" name="hot_dog_fort" value="2">2
-                            <input type="radio" name="hot_dog_fort" value="3">3
-                            <input type="radio" name="hot_dog_fort" value="4">4
-                            <input type="radio" name="hot_dog_fort" value="5">5
-                            <input type="radio" name="hot_dog_fort" value="6">6
-                            <input type="radio" name="hot_dog_fort" value="7">7
-                            <input type="radio" name="hot_dog_fort" value="8">8
-                            <input type="radio" name="hot_dog_fort" value="9">9
+                            <input type="radio" id='first_<%= product2.input_name%>' name=<%= product2.input_name%>
+                                value="0" checked>0
+                            <% for( var i=1; i<10 ; i++){ %>
+                            <input type="radio" name=<%= product2.input_name%> value="<%= i %>"><%= i%>
+                            <% } %>
                         </td>
                     </tr>
                     <tr>
@@ -63,16 +52,11 @@
                             薯條熱狗:
                         </td>
                         <td>
-                            <input type="radio" id="first_french_fries_dog" name="french_fries_dog" value="0" checked>0
-                            <input type="radio" name="french_fries_dog" value="1">1
-                            <input type="radio" name="french_fries_dog" value="2">2
-                            <input type="radio" name="french_fries_dog" value="3">3
-                            <input type="radio" name="french_fries_dog" value="4">4
-                            <input type="radio" name="french_fries_dog" value="5">5
-                            <input type="radio" name="french_fries_dog" value="6">6
-                            <input type="radio" name="french_fries_dog" value="7">7
-                            <input type="radio" name="french_fries_dog" value="8">8
-                            <input type="radio" name="french_fries_dog" value="9">9
+                            <input type="radio" id='first_<%= product3.input_name%>' name=<%= product3.input_name%>
+                                value="0" checked>0
+                            <% for( var i=1; i<10 ; i++){ %>
+                            <input type="radio" name=<%= product3.input_name%> value="<%= i %>"><%= i%>
+                            <% } %>
                         </td>
                     </tr>
                 </table>
@@ -93,13 +77,13 @@
                         <td>單號: 00</td>
                     </tr>
                     <tr>
-                        <td>果粉熱狗:</td>
+                        <td><%= product1.html_name%>:</td>
                     </tr>
                     <tr>
-                        <td>熱狗堡:</td>
+                        <td><%= product2.html_name%>:</td>
                     </tr>
                     <tr>
-                        <td>薯條熱狗:</td>
+                        <td><%= product3.html_name%>:</td>
                     </tr>
                     <tr>
                         <td>金額:00</td>
