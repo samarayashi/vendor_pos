@@ -1,17 +1,32 @@
 var express = require("express");
 var path = require('path');
 var bodyParser = require("body-parser");
-var sqilte_module = require('./sqlite_module.js');
+var sqilte_module = require('./models/sqlite_module.js');
 var sql = new sqilte_module.sql('hot_dog.db');
 var app = express();
-
 sql.init_db()
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, '../public')))
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, '/views')))
+app.set('view engine', 'ejs');
+index_ejs = {
+    product1: {
+        html_name: '粿粉熱狗',
+        input_name: "normal_hot_dog"
+    },
+    product2: {
+        html_name: '熱狗堡',
+        input_name: "hot_dog_fort"
+    },
+    product3: {
+        html_name: '薯條熱狗',
+        input_name: "french_fries_dog"
+    }
+}
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '../public/index_beta.html'))
+    res.render('index', index_ejs)
 });
+
 
 app.post('/send_order', function (req, res) {
     var sheet_number = req.body.sheet_number;
@@ -27,7 +42,7 @@ app.post('/send_order', function (req, res) {
     sql.insert_order(data);
 
     // 希望傳值處理完後仍保持原本頁面
-    res.sendFile(path.join(__dirname, '../public/index_beta.html'));
+    res.render('index', index_ejs);
 });
 
 
