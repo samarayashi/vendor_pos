@@ -2,7 +2,7 @@
 使用說明：
 1. 先安裝Node.js 8.11.4(為當初開發環境，可自行安裝新版測試)
 2. 在目標資料夾中下指令 npm install
-3. 運行server中的router測試
+3. 目標資料夾中開啟cmd執行下指令 node app.js
 
 希望利用nodejs寫出一個簡單的pos系統，可以實際在夜市佈署
 目前大致架構
@@ -14,7 +14,6 @@
 未實踐部分
 1. 在平板上運行時，似乎需要修改點擊物件的大小
 2. 資料庫做成關聯式
-3. 做成restful，利用ejs產生網頁
 
 關聯式資料庫雛形
 - table：orders、products、orders_products
