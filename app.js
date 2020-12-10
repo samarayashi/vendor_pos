@@ -3,6 +3,7 @@ var path = require('path');
 var bodyParser = require("body-parser");
 var sqilte_module = require('./models/sqlite_module.js');
 var sql = new sqilte_module.sql('hot_dog.db');
+const PORT = process.env.PORT || 5438
 var app = express();
 sql.init_db()
 
@@ -59,6 +60,6 @@ app.get('*', function (req, res) {
     res.send('找不到網頁！');
 });
 
-app.listen(5438, function (req, res) {
-    console.log("網站伺服器在5438埠口開工了！");
+app.listen(PORT), function (req, res) {
+    console.log("網站伺服器在PORT||5438埠口開工了！");
 });
