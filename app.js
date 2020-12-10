@@ -60,6 +60,6 @@ app.get('*', function (req, res) {
     res.send('找不到網頁！');
 });
 
-app.listen(PORT), function (req, res) {
-    console.log("網站伺服器在PORT||5438埠口開工了！");
+app.listen(PORT, function (req, res) {
+    console.log(`網站伺服器在${PORT}或5438埠口開工了！`);
 });
