@@ -179,6 +179,7 @@ function clean_storage() {
             storage.removeItem(key);
         }
     }
+    $('#check_area_container .check_table').remove();
 }
 
 function mount_ajaxForm() {

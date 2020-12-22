@@ -62,5 +62,5 @@ app.get('*', function (req, res) {
 });
 
 app.listen(PORT, function (req, res) {
-    console.log(`網站伺服器在${PORT}或5438埠口開工了！`);
+    console.log(`網站伺服器在${PORT}埠口開工了！`);
 });
