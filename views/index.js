@@ -1,3 +1,23 @@
+/*
+尚未解決模組化的問題，理想預設是import productsBeans.js 來使用
+現在只能先讓兩邊同步，app.js 是require  productsBeans.js 
+這邊同步複製productsBean.sj的內容
+*/
+productsBean = {
+    product1: {
+        html_name: '火腿熱狗',
+        input_name: "normal_hot_dog"
+    },
+    product2: {
+        html_name: '原味熱狗',
+        input_name: "hot_dog_fort"
+    },
+    product3: {
+        html_name: '脆薯熱狗',
+        input_name: "french_fries_dog"
+    }
+}
+
 var storage = localStorage;
 var now_sheet_number = 1
 var now_total_price = 0
@@ -65,13 +85,13 @@ function show_order_detail() {
                     <td>單號:${show_order_sheet}</td>
                 </tr>
                 <tr>
-                    <td>果粉熱狗:${order_detail.normal_hot_dog}</td>
+                    <td>${productsBean.product1.html_name}:${order_detail.normal_hot_dog}</td>
                 </tr>
                 <tr>
-                    <td>熱狗堡:${order_detail.hot_dog_fort}</td>
+                    <td>${productsBean.product2.html_name}:${order_detail.hot_dog_fort}</td>
                 </tr>
                 <tr>
-                    <td>薯條熱狗:${order_detail.french_fries_dog}</td>
+                    <td>${productsBean.product3.html_name}:${order_detail.french_fries_dog}</td>
                 </tr>
                 <tr>
                     <td>金額:${show_order_price}</td>
@@ -170,6 +190,16 @@ function mount_ajaxForm() {
     });
 }
 
+function check_count() {
+    let observer = new MutationObserver(function (mutations) {
+        $("#check_count").text($('.check_table').length)
+    });
+    var config = { childList: true };
+    observer.observe($("#check_area_container")[0], config);
+}
+
+
+
 $(function () {
     $('#check_area_container').css('height', window.innerHeight * 0.9)
     $('table input').on('click', get_total_price)
@@ -189,4 +219,5 @@ $(function () {
     mount_ajaxForm()
     finish_payment()
     clean_order()
+    check_count()
 })

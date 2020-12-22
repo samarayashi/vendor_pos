@@ -1,9 +1,10 @@
 var express = require("express");
 var path = require('path');
 var bodyParser = require("body-parser");
+var app = express();
+var products_ejs = require('./models/productsBean.js').productsBean;
 var sqilte_module = require('./models/sqlite_module.js');
 var sql = new sqilte_module.sql('hot_dog.db');
-var app = express();
 sql.init_db()
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,7 +25,7 @@ index_ejs = {
     }
 }
 app.get('/', function (req, res) {
-    res.render('index', index_ejs)
+    res.render('index', products_ejs)
 });
 
 
