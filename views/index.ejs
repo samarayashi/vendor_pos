@@ -28,35 +28,35 @@
                             <%= product1.html_name%>:
                         </td>
                         <td>
-                            <input type="radio" id='first_<%= product1.input_name%>' name=<%= product1.input_name%>
-                                value="0" checked>0
+                            <input type="radio" id='first_<%= product1.input_name%>' name=<%=product1.input_name%>
+                            value="0" checked>0
                             <% for( var i=1; i<10 ; i++){ %>
-                            <input type="radio" name=<%= product1.input_name%> value="<%= i %>"><%= i%>
-                            <% } %>
+                                <input type="radio" name=<%=product1.input_name%> value="<%= i %>"><%= i%>
+                                        <% } %>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            熱狗堡:
+                            <%= product2.html_name%>:
                         </td>
                         <td>
-                            <input type="radio" id='first_<%= product2.input_name%>' name=<%= product2.input_name%>
-                                value="0" checked>0
+                            <input type="radio" id='first_<%= product2.input_name%>' name=<%=product2.input_name%>
+                            value="0" checked>0
                             <% for( var i=1; i<10 ; i++){ %>
-                            <input type="radio" name=<%= product2.input_name%> value="<%= i %>"><%= i%>
-                            <% } %>
+                                <input type="radio" name=<%=product2.input_name%> value="<%= i %>"><%= i%>
+                                        <% } %>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            薯條熱狗:
+                            <%= product3.html_name%>:
                         </td>
                         <td>
-                            <input type="radio" id='first_<%= product3.input_name%>' name=<%= product3.input_name%>
-                                value="0" checked>0
+                            <input type="radio" id='first_<%= product3.input_name%>' name=<%=product3.input_name%>
+                            value="0" checked>0
                             <% for( var i=1; i<10 ; i++){ %>
-                            <input type="radio" name=<%= product3.input_name%> value="<%= i %>"><%= i%>
-                            <% } %>
+                                <input type="radio" name=<%=product3.input_name%> value="<%= i %>"><%= i%>
+                                        <% } %>
                         </td>
                     </tr>
                 </table>
@@ -77,13 +77,19 @@
                         <td>單號: 00</td>
                     </tr>
                     <tr>
-                        <td><%= product1.html_name%>:</td>
+                        <td>
+                            <%= product1.html_name%>:
+                        </td>
                     </tr>
                     <tr>
-                        <td><%= product2.html_name%>:</td>
+                        <td>
+                            <%= product2.html_name%>:
+                        </td>
                     </tr>
                     <tr>
-                        <td><%= product3.html_name%>:</td>
+                        <td>
+                            <%= product3.html_name%>:
+                        </td>
                     </tr>
                     <tr>
                         <td>金額:00</td>
@@ -95,7 +101,6 @@
 
         </div>
         <div id="check_area_container">
-            <div>查詢單號</div>
             <div>手頭總單數：</div>
             <table class="check_table">
                 <tr>

@@ -7,7 +7,7 @@ var show_order_price
 function ShowTime() {
     var NowDate = new Date();
     var year = NowDate.getFullYear();
-    var month = NowDate.getMonth();
+    var month = NowDate.getMonth() + 1;
     var day = NowDate.getDate();
     var hour = NowDate.getHours();
     var minute = NowDate.getMinutes();
