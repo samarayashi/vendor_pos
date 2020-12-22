@@ -1,12 +1,13 @@
-var express = require("express");
 var path = require('path');
-var bodyParser = require("body-parser");
+var express = require("express");
 var app = express();
+var bodyParser = require("body-parser");
 var products_ejs = require('./models/productsBean.js').productsBean;
 var sqilte_module = require('./models/sqlite_module.js');
 var sql = new sqilte_module.sql('hot_dog.db');
 sql.init_db()
 
+const PORT = process.env.PORT || 5438
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '/views')))
 app.set('view engine', 'ejs');
@@ -60,6 +61,6 @@ app.get('*', function (req, res) {
     res.send('找不到網頁！');
 });
 
-app.listen(5438, function (req, res) {
-    console.log("網站伺服器在5438埠口開工了！");
+app.listen(PORT, function (req, res) {
+    console.log(`網站伺服器在${PORT}或5438埠口開工了！`);
 });
