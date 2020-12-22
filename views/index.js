@@ -202,7 +202,7 @@ function check_count() {
 
 
 $(function () {
-    $('#check_area_container').css('height', window.innerHeight * 0.9)
+    $('#check_area_container').css('height', window.innerHeight * 0.95)
     $('table input').on('click', get_total_price)
     $('#check_area_container').on('click', '.check_table', function () {
         $(this).addClass('checked_table');
