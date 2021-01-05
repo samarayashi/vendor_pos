@@ -10,7 +10,7 @@ productsBean = {
         price: "10"
     },
     product2: {
-        html_name: '原味熱狗',
+        html_name: '裹粉熱狗',
         input_name: "corn_hot_dog",
         price: "20"
     },
@@ -42,15 +42,9 @@ function ShowTime() {
 
 function get_total_price() {
     var purchase_items = $(':checked')
-    var price_dict = {
-        hot_dog_fort_price: 10,
-        normal_hot_dog_price: 20,
-        french_fries_dog_price: 30,
-    }
-
     now_total_price = 0
-    for (var item of purchase_items) {
-        now_total_price += item.value * price_dict[item.name + '_price']
+    for (let i = 0; i < purchase_items.length; i++) {
+        now_total_price += purchase_items[i].value * productsBean['product' + (i + 1)].price
     }
     $("#price_show").text(now_total_price);
     $("#total_price").val(now_total_price);
@@ -91,13 +85,13 @@ function show_order_detail() {
                     <td>單號:${show_order_sheet}</td>
                 </tr>
                 <tr>
-                    <td>${productsBean.product1.html_name}:${order_detail.normal_hot_dog}</td>
+                    <td>${productsBean.product1.html_name}:${order_detail[productsBean.product1.input_name]}</td>
                 </tr>
                 <tr>
-                    <td>${productsBean.product2.html_name}:${order_detail.hot_dog_fort}</td>
+                    <td>${productsBean.product2.html_name}:${order_detail[productsBean.product2.input_name]}</td>
                 </tr>
                 <tr>
-                    <td>${productsBean.product3.html_name}:${order_detail.french_fries_dog}</td>
+                    <td>${productsBean.product3.html_name}:${order_detail[productsBean.product3.input_name]}</td>
                 </tr>
                 <tr>
                     <td>金額:${show_order_price}</td>
@@ -110,9 +104,9 @@ function show_order_detail() {
 }
 
 function reset_form() {
-    $("#first_hot_dog_fort").prop("checked", true);
-    $("#first_normal_hot_dog").prop("checked", true);
-    $("#first_french_fries_dog").prop("checked", true);
+    $("#first_" + productsBean.product1.input_name).prop("checked", true);
+    $("#first_" + productsBean.product2.input_name).prop("checked", true);
+    $("#first_" + productsBean.product3.input_name).prop("checked", true);
     $("#price_show").text(0);
     $("#total_price").val(0);
     now_total_price = 0;
