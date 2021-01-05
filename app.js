@@ -41,10 +41,14 @@ app.post('/cancel', function (req, res) {
     vendorSQL.cancel_payment(sheet_num);
 })
 
-app.post('/test', function (req, res) {
+app.post('/restore', function (req, res) {
     vendorSQL.get_unpayment(function (results) {
         res.send(results);
     });
+})
+
+app.post('/discard', function (req, res) {
+    vendorSQL.discard_orders()
 })
 
 app.get('*', function (req, res) {

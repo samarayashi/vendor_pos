@@ -21,7 +21,7 @@ productsBean = {
     }
 }
 
-var storage = localStorage;
+var storage = sessionStorage;
 var now_sheet_number = 1
 var now_total_price = 0
 var show_order_sheet
@@ -147,25 +147,17 @@ function cancel_order() {
 }
 
 function get_unpayment() {
-    $('#test_button').on('click', function () {
+    $('#restore_button').on('click', function () {
         $.ajax({
-            url: '/test',                        // url位置
+            url: '/restore',                        // url位置
             type: 'post',                   // post/get
             success: function (data) {
-                storage['test'] = JSON.stringify(data)
                 for (let sheet of data) {
-                    sheet.sheet_num
+                    storage['sheet' + sheet.sheet_num] = JSON.stringify(sheet);
                 }
+                restore_unfinish_order()
             }
         });
-    })
-}
-
-function clean_order() {
-    $('#detail_area_container').on('click', '.button', function () {
-        $('#detail_table_area').empty();
-        $('#sheet_' + show_order_sheet).remove();
-        delete storage['sheet' + show_order_sheet];
     })
 }
 
@@ -179,7 +171,7 @@ function restore_unfinish_order() {
         var key = sorted_keys[i]
         if (!(key.startsWith('sheet'))) { continue; }
         var value = JSON.parse(storage[key]);
-        let restore_sheet_number = value.sheet_number;
+        let restore_sheet_number = value.sheet_num;
         var restore_total_price = value.total_price;
         if (restore_sheet_number > max_sheet_number) max_sheet_number = restore_sheet_number;
         var template = `<table id="sheet_${restore_sheet_number}" class="check_table">
@@ -196,18 +188,30 @@ function restore_unfinish_order() {
     }
     now_sheet_number = max_sheet_number + 1
     $('#sheet_number').val(now_sheet_number);
-
-
-
 }
 
-function clean_storage() {
+function clean_order() {
+    $('#detail_area_container').on('click', '.button', function () {
+        $('#detail_table_area').empty();
+        $('#sheet_' + show_order_sheet).remove();
+        delete storage['sheet' + show_order_sheet];
+    })
+}
+
+function discard_all_orders() {
+    console.log('discard')
+    $.ajax({
+        url: '/discard',
+        type: 'post'
+    });
+
     for (const key in storage) {
-        if (storage.hasOwnProperty(key) && (key.startsWith('sheet'))) {
+        if (key.startsWith('sheet')) {
             storage.removeItem(key);
         }
     }
     $('#check_area_container .check_table').remove();
+
 }
 
 function mount_ajaxForm() {
@@ -241,8 +245,7 @@ $(function () {
         get_order_detail.call(this);
         show_order_detail();
     })
-    $('#restore_button').on('click', restore_unfinish_order)
-    $('#clean_storage_button').on('click', clean_storage)
+    $('#discard_button').on('click', discard_all_orders)
 
     ShowTime()
     mount_ajaxForm()
