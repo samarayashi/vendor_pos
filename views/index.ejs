@@ -60,6 +60,7 @@
                         </td>
                     </tr>
                 </table>
+                <input type="text" id="total_price" name=total_price value=0>
                 <div>總金額：<span id="price_show"></span>
                 </div>
                 <div><input id="order_submit" type="submit" name="order_submit" value="確認訂單"></div>
@@ -67,6 +68,7 @@
             <div style="margin-top: 100px;">
                 <button id="restore_button" class="button">還原未完訂單</button>
                 <button id='clean_storage_button' class="button">清空手上訂單</button>
+                <button id='test_button' class="button">測試資料庫撈值</button>
             </div>
         </div>
         <div id="detail_area_container">
@@ -96,7 +98,7 @@
                     </tr>
                 </table>
                 <button id="confirm_button" class="button">確認結帳</button>
-                <button class="button">取消訂單</button>
+                <button id="cancel_button" class="button">取消訂單</button>
             </div>
 
         </div>

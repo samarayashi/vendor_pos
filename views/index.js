@@ -6,15 +6,18 @@
 productsBean = {
     product1: {
         html_name: '火腿熱狗',
-        input_name: "normal_hot_dog"
+        input_name: "normal_hot_dog",
+        price: "10"
     },
     product2: {
         html_name: '原味熱狗',
-        input_name: "hot_dog_fort"
+        input_name: "corn_hot_dog",
+        price: "20"
     },
     product3: {
         html_name: '脆薯熱狗',
-        input_name: "french_fries_dog"
+        input_name: "french_fries_dog",
+        price: "30"
     }
 }
 
@@ -49,8 +52,11 @@ function get_total_price() {
     for (var item of purchase_items) {
         now_total_price += item.value * price_dict[item.name + '_price']
     }
-    $("#price_show").text(now_total_price)
+    $("#price_show").text(now_total_price);
+    $("#total_price").val(now_total_price);
 }
+
+
 
 function update_serial_number() {
     now_sheet_number = now_sheet_number + 1;
@@ -98,7 +104,7 @@ function show_order_detail() {
                 </tr>
             </table>
             <button id="confirm_button" class="button">確認結帳</button>
-            <button class="button">取消訂單</button>`
+            <button id="cancel_button" class="button">取消訂單</button>`
     $('#detail_table_area').empty()
         .prepend(template);
 }
@@ -108,6 +114,7 @@ function reset_form() {
     $("#first_normal_hot_dog").prop("checked", true);
     $("#first_french_fries_dog").prop("checked", true);
     $("#price_show").text(0);
+    $("#total_price").val(0);
     now_total_price = 0;
 }
 
@@ -125,10 +132,32 @@ function set_sheet_storage() {
 
 function finish_payment() {
     $('#detail_area_container').on('click', '#confirm_button', function () {
+        console.log('confirm')
         $.ajax({
             url: '/payment',                        // url位置
             type: 'post',                   // post/get
             data: { checked_sheet_number: show_order_sheet }      // 輸入的資料
+        });
+    })
+}
+
+function cancel_order() {
+    $('#detail_area_container').on('click', '#cancel_button', function () {
+        console.log('cancel');
+        $.ajax({
+            url: '/cancel',                        // url位置
+            type: 'post',                   // post/get
+            data: { cancel_sheet_number: show_order_sheet }
+        });
+    })
+}
+
+function get_unpayment() {
+    $('#test_button').on('click', function () {
+        $.ajax({
+            url: '/test',                        // url位置
+            type: 'post',                   // post/get
+            dat: {}
         });
     })
 }
@@ -219,6 +248,8 @@ $(function () {
     ShowTime()
     mount_ajaxForm()
     finish_payment()
+    cancel_order()
     clean_order()
     check_count()
+    get_unpayment()
 })
