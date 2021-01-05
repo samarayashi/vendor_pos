@@ -151,7 +151,12 @@ function get_unpayment() {
         $.ajax({
             url: '/test',                        // url位置
             type: 'post',                   // post/get
-            dat: {}
+            success: function (data) {
+                storage['test'] = JSON.stringify(data)
+                for (let sheet of data) {
+                    sheet.sheet_num
+                }
+            }
         });
     })
 }

@@ -33,15 +33,18 @@ vendorSQL.prototype.update_payment = function (sheet_num) {
 }
 
 // 時間物件操作參考 https://www.yiibai.com/mysql/today.html
-vendorSQL.prototype.get_unpayment = function () {
-    let sql = `select sheet_num, total_price, normal_count, french_count, fort_count from simple_transaction where date(transaction_date) = curdate() and payment_status = 0 and cancel=0;`
+// callback 參考 https://stackoverflow.com/questions/31875621/how-to-properly-return-a-result-from-mysql-with-node
+vendorSQL.prototype.get_unpayment = function (callback) {
+    let sql = `select sheet_num, total_price, normal_count, french_count, fort_count from simple_transaction 
+            where date(transaction_date) = curdate() and payment_status = 0 and cancel=0;`
     connection.query(sql, (error, results, fields) => {
         if (error) {
             return console.error(error.message);
         }
-        console.log(results);
+        return callback(results);
     })
 }
+
 
 vendorSQL.prototype.cancel_payment = function (sheet_num) {
     let sql = `update simple_transaction set cancel = 1
@@ -55,5 +58,11 @@ vendorSQL.prototype.cancel_payment = function (sheet_num) {
 }
 
 module.exports.vendorSQL = vendorSQL;
+
+/*
+vender = new vendorSQL();
+test = vender.get_unpayment(function (a) { console.log(a) });
+*/
+
 
 

@@ -42,7 +42,9 @@ app.post('/cancel', function (req, res) {
 })
 
 app.post('/test', function (req, res) {
-    vendorSQL.get_unpayment();
+    vendorSQL.get_unpayment(function (results) {
+        res.send(results);
+    });
 })
 
 app.get('*', function (req, res) {
