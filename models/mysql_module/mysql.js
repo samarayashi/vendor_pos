@@ -7,7 +7,7 @@ function vendorSQL() {
 }
 
 vendorSQL.prototype.insert_order = function (transaction) {
-    let stmt = `INSERT INTO simple_transaction(transaction_date,sheet_num, normal_hot_dog, french_fries_dog, corn_hot_dog, payment_status, total_price, cancel)
+    let stmt = `INSERT INTO simple_transaction(transaction_date,sheet_num, normal_hot_dog, corn_hot_dog, french_fries_dog,  payment_status, total_price, cancel)
     VALUES(now() ,?,?,?,?,?,?,?)`;
 
     connection.query(stmt, transaction, (err, results, fields) => {
@@ -35,7 +35,7 @@ vendorSQL.prototype.update_payment = function (sheet_num) {
 // 時間物件操作參考 https://www.yiibai.com/mysql/today.html
 // callback 參考 https://stackoverflow.com/questions/31875621/how-to-properly-return-a-result-from-mysql-with-node
 vendorSQL.prototype.get_unpayment = function (callback) {
-    let sql = `select sheet_num, total_price, normal_hot_dog, french_fries_dog, corn_hot_dog from simple_transaction 
+    let sql = `select sheet_num, total_price, normal_hot_dog, corn_hot_dog ,french_fries_dog, from simple_transaction 
             where date(transaction_date) = curdate() and payment_status = 0 and cancel=0;`
     connection.query(sql, (error, results, fields) => {
         if (error) {
