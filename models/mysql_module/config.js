@@ -1,5 +1,3 @@
-
-// heroku cleardb
 let config = {
     locol_pool_config: {
         connectionLimit: 8,
