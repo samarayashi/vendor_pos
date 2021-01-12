@@ -4,7 +4,7 @@ var app = express();
 var bodyParser = require("body-parser");
 var products_ejs = require('./models/productsBean.js').productsBean;
 // var sqilte_module = require('./models/sqlite_module.js');
-var mysql = require('./models/mysql_module/mysql.js')
+var mysql = require('./models/mysql_module/use_mysql.js')
 var vendorSQL = new mysql.vendorSQL()
 // var sql = new sqilte_module.sql('hot_dog.db');
 // sql.init_db()
