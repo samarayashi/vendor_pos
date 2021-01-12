@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "使用說明： 1. 先安裝Node.js 8.11.4(為當初開發環境，可自行安裝新版測試) 2. 在目標資料夾中下指令 npm install 3. 運行server中的router測試",
   "main": "index.js",
+  "engines": {
+    "node": "8.1.4"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
