@@ -48,7 +48,7 @@ app.post('/restore', function (req, res) {
 })
 
 app.post('/discard', function (req, res) {
-    vendorSQL.discard_orders()
+    sql.discard_orders()
 })
 
 app.get('*', function (req, res) {

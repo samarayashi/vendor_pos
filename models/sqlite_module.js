@@ -88,5 +88,17 @@ sql.prototype.get_unpayment = function (callback) {
     })
 }
 
+sql.prototype.discard_orders = function () {
+    var db = new sqlite3.Database(__dirname + '/' + this.db_name, function (e) {
+        if (e) throw e;
+    });
+    db.serialize(function () {
+        db.run(`update simple_transaction set cancel = 1
+        where date(transaction_date) = date('now','+8 hour') and payment_status = 0 and cancel = 0;`, function (e) {
+            if (e) throw e;
+        })
+        db.close();
+    })
+}
 
 module.exports.sql = sql;
