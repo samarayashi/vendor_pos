@@ -44,6 +44,23 @@ vendorSQL.prototype.update_payment = function (sheet_num) {
     });
 }
 
+vendorSQL.prototype.cancel_payment = function (sheet_num) {
+    let sql = `update simple_transaction set cancel = 1
+            where sheet_num = ? order by transaction_ID desc limit 1;`
+
+    pool.getConnection(function (err, conn) {
+        if (err) {
+            return console.log(err.message);
+        }
+        conn.query(sql, sheet_num, (error, results, fields) => {
+            if (error) {
+                return console.error(error.message);
+            }
+            console.log('cancel:' + results.changedRows + 'rows');
+        });
+        conn.release();
+    });
+}
 
 // 時間物件操作參考 https://www.yiibai.com/mysql/today.html
 // callback 參考 https://stackoverflow.com/questions/31875621/how-to-properly-return-a-result-from-mysql-with-node
@@ -65,24 +82,6 @@ vendorSQL.prototype.get_unpayment = function (callback) {
     });
 }
 
-
-vendorSQL.prototype.cancel_payment = function (sheet_num) {
-    let sql = `update simple_transaction set cancel = 1
-            where sheet_num = ? order by transaction_ID desc limit 1;`
-
-    pool.getConnection(function (err, conn) {
-        if (err) {
-            return console.log(err.message);
-        }
-        conn.query(sql, sheet_num, (error, results, fields) => {
-            if (error) {
-                return console.error(error.message);
-            }
-            console.log('cancel:' + results.changedRows + 'rows');
-        });
-        conn.release();
-    });
-}
 
 vendorSQL.prototype.discard_orders = function () {
     let sql = `update simple_transaction set cancel = 1

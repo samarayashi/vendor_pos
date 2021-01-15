@@ -4,7 +4,7 @@ var app = express();
 var bodyParser = require("body-parser");
 var products_ejs = require('./models/productsBean.js').productsBean;
 // var mysql = require('./models/mysql_module/use_mysql.js')
-// var vendorSQL = new mysql.vendorSQL()
+// var sql = new mysql.vendorSQL()
 var sqilte_module = require('./models/sqlite_module.js');
 var sql = new sqilte_module.sql('hot_dog.db');
 sql.init_db()
@@ -38,7 +38,7 @@ app.post('/payment', function (req, res) {
 
 app.post('/cancel', function (req, res) {
     var sheet_num = [req.body.cancel_sheet_number];
-    vendorSQL.cancel_payment(sheet_num);
+    sql.cancel_payment(sheet_num);
 })
 
 app.post('/restore', function (req, res) {

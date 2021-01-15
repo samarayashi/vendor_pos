@@ -56,6 +56,22 @@ sql.prototype.update_payment = function (data) {
     })
 }
 
+sql.prototype.cancel_payment = function (data) {
+    var db = new sqlite3.Database(__dirname + '/' + this.db_name, function (e) {
+        if (e) throw e;
+    });
+    db.serialize(function () {
+        db.get('SELECT transaction_ID FROM simple_transaction WHERE sheet_num = ? ORDER BY transaction_ID DESC LIMIT 1;', data, function (e, row) {
+            if (e) throw e;
+            if (!(row === undefined)) {
+                db.run(`UPDATE simple_transaction SET cancel  = 1 WHERE transaction_ID = ${row.transaction_ID};`, function (e) { if (e) throw e; })
+                db.close();
+            }
+        })
+    })
+}
+
+
 sql.prototype.get_unpayment = function (callback) {
     var db = new sqlite3.Database(__dirname + '/' + this.db_name, function (e) {
         if (e) throw e;
