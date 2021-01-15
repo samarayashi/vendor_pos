@@ -1,7 +1,7 @@
 # pos-nodejs
 使用說明：
 1. 開方環境為Node.js 8.11.4
-2. 有sqlite和mysql兩種版本
+2. 有sqlite和mysql兩種版本: 可在app.js調整
 3. 本機端單機使用 => sqlite
 4. 部署heroku => mysql配合heroku上的clear db
 
