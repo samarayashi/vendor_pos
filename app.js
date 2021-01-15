@@ -33,7 +33,7 @@ app.post('/send_order', function (req, res) {
 
 app.post('/payment', function (req, res) {
     var sheet_num = [req.body.checked_sheet_number];
-    vendorSQL.update_payment(sheet_num);
+    sql.update_payment(sheet_num);
 })
 
 app.post('/cancel', function (req, res) {
@@ -42,7 +42,7 @@ app.post('/cancel', function (req, res) {
 })
 
 app.post('/restore', function (req, res) {
-    vendorSQL.get_unpayment(function (results) {
+    sql.get_unpayment(function (results) {
         res.send(results);
     });
 })
