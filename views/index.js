@@ -254,4 +254,34 @@ $(function () {
     clean_order()
     check_count()
     get_unpayment()
+
+    $('.quantity-input').on('input', function() {
+        const radioName = $(this).data('radio-name');
+        const value = parseInt($(this).val());
+        
+        // 檢查是否為有效的非負整數
+        if (value >= 0) {
+            // 取消選中該組的所有 radio buttons
+            $(`input[name="${radioName}"]`).prop('checked', false);
+            // 創建新的 radio button 並設置為選中
+            const newRadio = $('<input>')
+                .attr('type', 'radio')
+                .attr('name', radioName)
+                .val(value)
+                .prop('checked', true)
+                .hide();
+            $(this).after(newRadio);
+        } else {
+            // 如果輸入無效（負數或非數字），清空輸入框
+            $(this).val('');
+        }
+        get_total_price();
+    });
+
+    // 當選擇 radio button 時清空對應的輸入框
+    $('.radio-group input[type="radio"]').on('change', function() {
+        $(this).closest('.quantity-selector')
+               .find('.quantity-input')
+               .val('');
+    });
 })

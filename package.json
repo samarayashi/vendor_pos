@@ -1,19 +1,23 @@
 {
-  "name": "pos-nodejs-master",
+  "name": "hotdog-order-system",
   "version": "1.0.0",
-  "description": "使用說明： 1. 先安裝Node.js 8.11.4(為當初開發環境，可自行安裝新版測試) 2. 在目標資料夾中下指令 npm install 3. 運行server中的router測試",
-  "main": "index.js",
+  "description": "熱狗點餐系統",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ejs": "^3.1.5",
     "express": "^4.17.1",
+    "ejs": "^3.1.6",
+    "body-parser": "^1.19.0",
     "mysql": "^2.18.1",
     "sqlite3": "^5.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }

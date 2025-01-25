@@ -1,85 +1,277 @@
+:root {
+  --primary: #FF6B6B;
+  --secondary: #4ECDC4;
+  --dark: #2C3E50;
+  --light: #F7F9F9;
+  --gray: #E0E0E0;
+}
+
 body,
 html {
     padding: 0;
     margin: 0;
     width: 100%;
     height: 100%;
-    font-family: "Comic Sans MS", "Microsoft JhengHei";
-    color: #333;
+    font-family: "Microsoft JhengHei", sans-serif;
+    color: var(--dark);
+    background-color: var(--light);
 }
 
 div {
     -webkit-tap-highlight-color: transparent;
 }
 
+/* Header 樣式 */
+header {
+    background-color: var(--primary);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.time-display {
+    background: white;
+    color: var(--dark);
+    padding: 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0.5rem;
+}
+
+/* 主容器樣式 */
 #outer_container {
+    flex: 1;
     display: flex;
-    height: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
+    padding: 1rem;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
+/* 訂單區域 */
 #order_area_container {
-    flex: 1 0 450px;
-}
-
-#detail_area_container {
-    flex: 1 1 500px;
-    background-color: #EAF0ED;
-}
-
-#check_area_container {
-    flex: 0 1 220px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    overflow-y: scroll;
-    /* overflow-y: overlay; */
-    /* overflow-y: auto; */
+    flex: 2;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .order_table {
-    border-collapse: collapse;
-    border: 1px solid black;
-
+    width: 100%;
+    margin: 1rem 0;
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .order_table tr {
-    border: 1px solid #000;
-    padding: 15px;
+    border: none;
+    background: var(--light);
 }
 
-.detail_table td {
-    padding-right: 5px;
+.order_table tr:nth-child(odd) {
+    background: white;
 }
 
+.order_table td {
+    padding: 1rem;
+}
+
+/* 詳細資訊區域 */
+#detail_area_container {
+    flex: 2;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 訂單列表區域 */
+#check_area_container {
+    flex: 1;
+    background: white;
+    padding: 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 總單數樣式 */
+.order-count {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    padding: 1rem 1.5rem;
+    margin-bottom: 0.5rem;
+    z-index: 1;
+    border-bottom: 1px solid var(--gray);
+    border-radius: 8px 8px 0 0;
+}
+
+/* 訂單表格容器 - 新增樣式 */
+#check_area_container > .check_table {
+    padding: 0 1.5rem;
+    margin: 0 0 1rem 0;
+}
+
+/* 訂單表格容器 */
+.check-tables-container {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* 按鈕樣式 */
+.button {
+    background-color: var(--secondary);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.button:hover {
+    background-color: #45b7af;
+    transform: translateY(-1px);
+}
+
+/* 訂單表格樣式 */
 .check_table {
-    border: 1px solid black;
-    border-collapse: collapse;
-    margin: 10px;
-    padding: 5px;
+    width: 100%;
+    margin-bottom: 1rem;
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+    overflow: hidden;
 }
 
-.check_table tr {
-    border: 1px dashed black;
+.check_table td {
+    padding: 0.8rem;
 }
 
 .checked_table {
-    background-color: gray;
+    background-color: var(--secondary);
+    color: white;
 }
 
-.button {
+/* RWD 設定優化 */
+@media screen and (max-width: 1024px) {
+    #outer_container {
+        flex-direction: column;
+        height: auto;
+        padding: 1rem;
+    }
+    
+    #order_area_container,
+    #detail_area_container,
+    #check_area_container {
+        width: auto; /* 改為 auto */
+        margin-bottom: 1rem;
+    }
+    
+    #check_area_container {
+        max-height: 400px;
+    }
+}
+
+/* 表單元素樣式 */
+input[type="text"],
+input[type="number"] {
+    padding: 0.5rem;
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+    margin: 0.5rem 0;
+}
+
+input[type="radio"] {
+    margin: 0 0.3rem;
+}
+
+#order_submit {
+    background-color: var(--primary);
+    color: white;
+    padding: 1rem 2rem;
     border: none;
-    color: black;
-    background-color: white;
-    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+#price_show {
+    font-size: 1.5rem;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+/* 修改 body 樣式確保 footer 永遠在底部 */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+/* Footer 樣式 */
+footer {
+    background-color: var(--dark);
+    color: var(--light);
+    padding: 1rem;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin-top: 16px;
-    margin-bottom: 8px;
-    border: 2px solid black;
+    font-size: 0.9rem;
+}
+
+footer .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* RWD 設定中加入 footer 相關樣式 */
+@media screen and (max-width: 1024px) {
+    footer .footer-content {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+/* 數量選擇器樣式 */
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.radio-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.number-input {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-input {
+    width: 60px;
+    padding: 0.3rem;
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+    text-align: center;
+}
+
+.quantity-input:focus {
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 2px rgba(78, 205, 196, 0.2);
 }
