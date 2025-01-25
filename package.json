@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "熱狗點餐系統",
   "main": "app.js",
+  "engines": {
+    "node": "18.x",
+    "npm": "9.x"
+  },
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js"
