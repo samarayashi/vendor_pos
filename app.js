@@ -7,7 +7,8 @@ require('dotenv').config();
 
 // 使用資料庫工廠來獲取適當的資料庫實例
 var DatabaseFactory = require('./models/database');
-var sql = DatabaseFactory.createDatabase();
+var env = process.env.NODE_ENV || 'development';
+var sql = DatabaseFactory.createDatabase(env);
 
 sql.init_db();
 
