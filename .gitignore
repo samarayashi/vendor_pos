@@ -7,3 +7,5 @@ node_modules/
 
 #忽略測試
 mysql_test/
+
+.env
