@@ -3,11 +3,13 @@ var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var products_ejs = require('./models/productsBean.js').productsBean;
-var mysql = require('./models/mysql_module/use_mysql.js')
-var sql = new mysql.sql()
-// var sqilte_module = require('./models/sqlite_module.js');
-// var sql = new sqilte_module.sql('hot_dog.db');
-sql.init_db()
+require('dotenv').config();
+
+// 使用資料庫工廠來獲取適當的資料庫實例
+var DatabaseFactory = require('./models/database');
+var sql = DatabaseFactory.createDatabase();
+
+sql.init_db();
 
 const PORT = process.env.PORT || 5438
 app.use(bodyParser.urlencoded({ extended: false }));
